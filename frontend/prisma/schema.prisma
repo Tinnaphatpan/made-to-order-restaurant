@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  phone     String   @default("")
+  address   String   @default("")
+  avatar    String   @default("")
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  description String     @default("")
+  icon        String     @default("🍽️")
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  menuItems   MenuItem[]
+}
+
+model MenuItem {
+  id              String    @id @default(cuid())
+  name            String
+  description     String    @default("")
+  price           Float
+  categoryId      String
+  category        Category  @relation(fields: [categoryId], references: [id])
+  image           String    @default("")
+  isAvailable     Boolean   @default(true)
+  preparationTime Int       @default(15)
+  options         Json      @default("[]")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  orderNumber   String   @unique
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id])
+  orderType     String   @default("dine-in")
+  tableNumber   String   @default("")
+  customerName  String   @default("ลูกค้า")
+  customerPhone String   @default("")
+  items         Json
+  totalPrice    Float
+  deliveryFee   Float    @default(0)
+  grandTotal    Float
+  status        String   @default("pending")
+  note          String   @default("")
+  delivery      Json?
+  timeline      Json     @default("[]")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Expense {
+  id        String   @id @default(cuid())
+  title     String
+  amount    Float
+  category  String   @default("อื่นๆ")
+  date      DateTime @default(now())
+  note      String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
