@@ -185,14 +185,14 @@ session.user: { id, name, email, role, avatar, phone }
 ## .env.local
 
 ```env
-DATABASE_URL="postgresql://..."   # Neon connection string
+DATABASE_URL="postgresql://user:pass@host/db?sslmode=require"
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=madetoorder-super-secret-key-2024-tinnaphat
-ADMIN_EMAIL=admin@zank.com
-ADMIN_PASSWORD=admin1234
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
+NEXTAUTH_SECRET=your-random-secret-here
+ADMIN_EMAIL=admin@yourdomain.com
+ADMIN_PASSWORD=your-admin-password
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
 ```
 
 ---
